@@ -55,7 +55,7 @@ function WindUI:Notify(nc)
     local Card = Instance.new("Frame", Wrapper); Card.Size = UDim2.new(1, 0, 1, 0); Card.Position = UDim2.new(1, 350, 0, 0); Card.BackgroundColor3 = CARD_COLOR; Card.BackgroundTransparency = 0.1
     Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
     Instance.new("UIStroke", Card).Color = Color3.fromRGB(60, 60, 70); Instance.new("UIStroke", Card).Thickness = 1.2
-    
+
     local TimerLine = Instance.new("Frame", Card); TimerLine.Size = UDim2.new(1, -24, 0, 3); TimerLine.Position = UDim2.new(0, 12, 1, -8); TimerLine.BackgroundColor3 = ACCENT_BLUE; TimerLine.BorderSizePixel = 0
     Instance.new("UICorner", TimerLine).CornerRadius = UDim.new(1, 0)
 
@@ -102,7 +102,7 @@ function WindUI:CreateWindow(WinConf)
     local Sidebar = Instance.new("Frame", Main); Sidebar.BackgroundTransparency = 1; Sidebar.ZIndex = 2
     local TitleLabel = Instance.new("TextLabel", Sidebar); TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255); TitleLabel.Font = Enum.Font.GothamBold; TitleLabel.TextXAlignment = Enum.TextXAlignment.Left; TitleLabel.BackgroundTransparency = 1; TitleLabel.TextTruncate = Enum.TextTruncate.AtEnd; TitleLabel.Text = WTitle
     local VersionLabel = Instance.new("TextLabel", Sidebar); VersionLabel.Text = "v" .. WVersion:gsub("^v", ""); VersionLabel.TextColor3 = Color3.fromRGB(120, 120, 120); VersionLabel.Font = Enum.Font.GothamMedium; VersionLabel.TextSize = 12; VersionLabel.TextXAlignment = Enum.TextXAlignment.Left; VersionLabel.BackgroundTransparency = 1
-    
+
     local NavList = Instance.new("ScrollingFrame", Sidebar); NavList.BackgroundTransparency = 1; NavList.ScrollBarThickness = 0
     NavList.AutomaticCanvasSize = Enum.AutomaticSize.Y; NavList.CanvasSize = UDim2.new(0, 0, 0, 0)
     local NavPadding = Instance.new("UIPadding", NavList); NavPadding.PaddingBottom = UDim.new(0, 20)
@@ -112,15 +112,15 @@ function WindUI:CreateWindow(WinConf)
     ProfileCard.BackgroundColor3 = Color3.fromRGB(30, 33, 40)
     ProfileCard.BackgroundTransparency = 0.4
     Instance.new("UICorner", ProfileCard).CornerRadius = UDim.new(0, 12)
-    
+
     local Avatar = Instance.new("ImageLabel", ProfileCard)
     Avatar.BackgroundColor3 = Color3.fromRGB(45, 48, 55); Avatar.BorderSizePixel = 0
     Instance.new("UICorner", Avatar).CornerRadius = UDim.new(1, 0)
-    
+
     local DisplayName = Instance.new("TextLabel", ProfileCard)
     DisplayName.TextColor3 = Color3.new(1, 1, 1); DisplayName.Font = Enum.Font.GothamBold; DisplayName.TextSize = 13
     DisplayName.TextXAlignment = Enum.TextXAlignment.Left; DisplayName.BackgroundTransparency = 1; DisplayName.TextTruncate = Enum.TextTruncate.AtEnd
-    
+
     local UserName = Instance.new("TextLabel", ProfileCard)
     UserName.TextColor3 = Color3.fromRGB(150, 150, 150); UserName.Font = Enum.Font.GothamMedium; UserName.TextSize = 11
     UserName.TextXAlignment = Enum.TextXAlignment.Left; UserName.BackgroundTransparency = 1; UserName.TextTruncate = Enum.TextTruncate.AtEnd
@@ -158,12 +158,12 @@ function WindUI:CreateWindow(WinConf)
     local function UpdateLayout()
         local vp = GetScreenSize()
         if vp.X == 0 then return end
-        
+
         local isMobile = (vp.X < 800 or vp.Y < 500)
         currentScale = isMobile and 0.85 or 1
-        
+
         if Main.Visible then TweenService:Create(MainScale, TweenInfo.new(0.2), {Scale = currentScale}):Play() end
-        
+
         if isMobile then
             TweenService:Create(Main, TweenInfo.new(0.2), {Size = UDim2.new(0, 620, 0, 370)}):Play()
             Sidebar.Size = UDim2.new(0, 160, 1, 0)
@@ -171,12 +171,12 @@ function WindUI:CreateWindow(WinConf)
             TitleLabel.Size = UDim2.new(1, -10, 0, 36); TitleLabel.Position = UDim2.new(0, 20, 0, 20); TitleLabel.TextSize = 22
             VersionLabel.Size = UDim2.new(1, -10, 0, 20); VersionLabel.Position = UDim2.new(0, 20, 0, 48)
             NavList.Size = UDim2.new(1, 0, 1, -150); NavList.Position = UDim2.new(0, 0, 0, 80)
-            
+
             ProfileCard.Size = UDim2.new(1, -20, 0, 45); ProfileCard.Position = UDim2.new(0, 10, 1, -55)
             Avatar.Size = UDim2.new(0, 30, 0, 30); Avatar.Position = UDim2.new(0, 6, 0.5, -15)
             DisplayName.Size = UDim2.new(1, -44, 0, 20); DisplayName.Position = UDim2.new(0, 40, 0, 4)
             UserName.Size = UDim2.new(1, -44, 0, 20); UserName.Position = UDim2.new(0, 40, 0, 20)
-            
+
             NotifList.Size = UDim2.new(0, 220, 1, -20); NotifList.Position = UDim2.new(1, -230, 0, 10)
         else
             TweenService:Create(Main, TweenInfo.new(0.2), {Size = UDim2.new(0, 850, 0, 500)}):Play()
@@ -185,18 +185,18 @@ function WindUI:CreateWindow(WinConf)
             TitleLabel.Size = UDim2.new(1, -10, 0, 36); TitleLabel.Position = UDim2.new(0, 20, 0, 22); TitleLabel.TextSize = 26
             VersionLabel.Size = UDim2.new(1, -10, 0, 20); VersionLabel.Position = UDim2.new(0, 20, 0, 54)
             NavList.Size = UDim2.new(1, 0, 1, -175); NavList.Position = UDim2.new(0, 0, 0, 95)
-            
+
             ProfileCard.Size = UDim2.new(1, -30, 0, 50); ProfileCard.Position = UDim2.new(0, 15, 1, -65)
             Avatar.Size = UDim2.new(0, 34, 0, 34); Avatar.Position = UDim2.new(0, 8, 0.5, -17)
             DisplayName.Size = UDim2.new(1, -54, 0, 20); DisplayName.Position = UDim2.new(0, 48, 0, 6)
             UserName.Size = UDim2.new(1, -54, 0, 20); UserName.Position = UDim2.new(0, 48, 0, 24)
-            
+
             NotifList.Size = UDim2.new(0, 300, 1, -20); NotifList.Position = UDim2.new(1, -320, 0, 10)
         end
     end
     ScreenGui:GetPropertyChangedSignal("AbsoluteSize"):Connect(UpdateLayout)
     UpdateLayout() 
-    
+
     MainScale.Scale = currentScale * 0.8 
 
     Search:GetPropertyChangedSignal("Text"):Connect(function()
@@ -226,17 +226,17 @@ function WindUI:CreateWindow(WinConf)
 
     local Pill = Instance.new("CanvasGroup", ScreenGui); Pill.Size = UDim2.new(0, 240, 0, 50); Pill.Position = UDim2.new(0.5, 0, 0.08, 0); Pill.AnchorPoint = Vector2.new(0.5, 0.5); Pill.BackgroundColor3 = BG_COLOR; Pill.BackgroundTransparency = 0.2; Pill.GroupTransparency = 1; Pill.Visible = false
     local PillScale = Instance.new("UIScale", Pill); PillScale.Scale = 0.5; Instance.new("UICorner", Pill).CornerRadius = UDim.new(1, 0)
-    
+
     local PGrad = Instance.new("UIGradient", Instance.new("UIStroke", Pill)); PGrad.Parent.Thickness = 2; PGrad.Color = ColorSequence.new({ ColorSequenceKeypoint.new(0, ACCENT_BLUE), ColorSequenceKeypoint.new(0.5, Color3.new(1,1,1)), ColorSequenceKeypoint.new(1, ACCENT_BLUE) })
     local ranim = RunService.RenderStepped:Connect(function() if Pill.Visible then PGrad.Rotation = (PGrad.Rotation + 3) % 360 end end)
-    
+
     local PIcons = {{22, 15, "rbxassetid://7733717447"}, {1, 50, nil, true}, {24, 65, "rbxassetid://6031289132"}}
     for i, v in ipairs(PIcons) do
         local obj = Instance.new(v[4] and "Frame" or "ImageLabel", Pill); obj.Size = v[4] and UDim2.new(0,1,0.5,0) or UDim2.new(0,v[1],0,v[1]); obj.Position = v[4] and UDim2.new(0,v[2],0.25,0) or UDim2.new(0,v[2],0.5, -(v[1]/2)); obj.BackgroundTransparency = v[4] and 0.8 or 1
         if v[3] then obj.Image = v[3]; obj.ImageColor3 = i==1 and Color3.fromRGB(150,150,150) or Color3.new(1,1,1) end
         if v[4] then obj.BackgroundColor3 = Color3.new(1,1,1); obj.BorderSizePixel = 0 end
     end
-    
+
     local PillT = Instance.new("TextLabel", Pill); PillT.Size = UDim2.new(0, 90, 1, 0); PillT.Position = UDim2.new(0, 100, 0, 0); PillT.Text = "RainbowAI 助手"; PillT.TextColor3 = Color3.new(1,1,1); PillT.Font = Enum.Font.GothamMedium; PillT.TextSize = 15; PillT.TextXAlignment = Enum.TextXAlignment.Left; PillT.BackgroundTransparency = 1
     local PCheck = Instance.new("TextLabel", Pill); PCheck.Size = UDim2.new(0, 24, 0, 24); PCheck.Position = UDim2.new(1, -35, 0.5, -12); PCheck.Text = ""; PCheck.TextColor3 = ACCENT_BLUE; PCheck.Font = Enum.Font.Gotham; PCheck.TextSize = 22; PCheck.BackgroundTransparency = 1
     local PDragZone = Instance.new("TextButton", Pill); PDragZone.Size = UDim2.new(0, 60, 1, 0); PDragZone.BackgroundTransparency = 1; PDragZone.Text = ""; PDragZone.ZIndex=99
@@ -271,7 +271,7 @@ function WindUI:CreateWindow(WinConf)
     function Window:EditOpenButton() end
 
     local TABS_OBJ = {}
-    
+
     function Window:Tab(cnf)
         local TT = cnf.Title or "No Title"
         local locked = cnf.Locked or false
@@ -302,15 +302,15 @@ function WindUI:CreateWindow(WinConf)
             Page.Visible = true
             TweenService:Create(NBtn, TweenInfo.new(0.2), {BackgroundTransparency = 0.15, BackgroundColor3 = ACCENT_BLUE, TextColor3 = Color3.new(1,1,1)}):Play()
         end)
-        
+
         table.insert(TABS_OBJ, {Btn = NBtn, Page = Page})
-        
+
         if #TABS_OBJ == 1 then
             Page.Visible = true; NBtn.BackgroundTransparency = 0.15; NBtn.BackgroundColor3 = ACCENT_BLUE; NBtn.TextColor3 = Color3.new(1,1,1)
         end
 
-        local CustomTabAPI = {}
-        
+local CustomTabAPI = {}
+
         function CustomTabAPI:Section(sc)
             tabLayoutCounter = tabLayoutCounter + 1
             local SFrame = Instance.new("Frame", Page); SFrame.Name = sc.Title or "Section"
@@ -326,16 +326,16 @@ function WindUI:CreateWindow(WinConf)
             local Card = Instance.new("Frame", Page); Card.Name = pc.Title or "Paragraph"
             Card.BackgroundColor3 = CARD_COLOR; Card.BackgroundTransparency = 0.5; Card.BorderSizePixel = 0; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
-            
+
             local T = Instance.new("TextLabel", Card)
-            T.Size = UDim2.new(1, -20, 0, 25); T.Position = UDim2.new(0, 15, 0, 10); T.Text = pc.Title or ""; T.Font = Enum.Font.GothamBold; T.TextSize = 15; T.TextColor3 = Color3.new(1,1,1); T.TextXAlignment = Enum.TextXAlignment.Left; T.BackgroundTransparency = 1
-            
+            T.Size = UDim2.new(1, -20, 0, 25); T.Position = UDim2.new(0, 15, 0, 5); T.Text = pc.Title or ""; T.Font = Enum.Font.GothamBold; T.TextSize = 15; T.TextColor3 = Color3.new(1,1,1); T.TextXAlignment = Enum.TextXAlignment.Left; T.BackgroundTransparency = 1
+
             local D = Instance.new("TextLabel", Card)
-            D.Size = UDim2.new(1, -20, 0, 0); D.Position = UDim2.new(0, 15, 0, 35); D.Text = pc.Desc or ""; D.Font = Enum.Font.GothamMedium; D.TextSize = 12; D.TextColor3 = Color3.fromRGB(150, 150, 150); D.TextXAlignment = Enum.TextXAlignment.Left; D.TextYAlignment = Enum.TextYAlignment.Top; D.BackgroundTransparency = 1; D.TextWrapped = true; D.RichText = true
-            
+            D.Size = UDim2.new(1, -30, 0, 0); D.Position = UDim2.new(0, 15, 0, 30); D.Text = pc.Desc or ""; D.Font = Enum.Font.GothamMedium; D.TextSize = 12; D.TextColor3 = Color3.fromRGB(150, 150, 150); D.TextXAlignment = Enum.TextXAlignment.Left; D.TextYAlignment = Enum.TextYAlignment.Top; D.BackgroundTransparency = 1; D.TextWrapped = true; D.RichText = true
+
             local function updateSize()
-                D.Size = UDim2.new(1, -20, 0, D.TextBounds.Y + 5)
-                Card.Size = UDim2.new(1, -20, 0, 45 + D.Size.Y.Offset)
+                D.Size = UDim2.new(1, -30, 0, D.TextBounds.Y)
+                Card.Size = UDim2.new(1, -20, 0, 40 + D.TextBounds.Y)
             end
             D:GetPropertyChangedSignal("TextBounds"):Connect(updateSize); updateSize()
 
@@ -347,15 +347,23 @@ function WindUI:CreateWindow(WinConf)
 
         function CustomTabAPI:Button(bc)
             tabLayoutCounter = tabLayoutCounter + 1
-            local Card = Instance.new("TextButton", Page); Card.Size = UDim2.new(1, -20, 0, 50); Card.Name = bc.Title or "Btn"; Card.BackgroundColor3 = bc.Color or CARD_COLOR; Card.BackgroundTransparency = bc.Color and 0.2 or 0.5; Card.AutoButtonColor = false; Card.Text = ""; Card.LayoutOrder = tabLayoutCounter
+            local Card = Instance.new("TextButton", Page); Card.Size = UDim2.new(1, -20, 0, 45); Card.Name = bc.Title or "Btn"; Card.BackgroundColor3 = bc.Color or CARD_COLOR; Card.BackgroundTransparency = bc.Color and 0.2 or 0.5; Card.AutoButtonColor = false; Card.Text = ""; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
 
-            local TL = Instance.new("TextLabel", Card); TL.Size = UDim2.new(1, -20, 0, 20); TL.Position = UDim2.new(0, 15, 0, 15)
-            if bc.Desc and bc.Desc ~= "" then TL.Position = UDim2.new(0, 15, 0, 8) end 
+            local TL = Instance.new("TextLabel", Card); TL.Position = UDim2.new(0, 15, 0, 0)
             TL.Text = (bc.Title or "") .. (bc.Locked and " 🔒" or ""); TL.TextColor3 = Color3.new(1,1,1); TL.Font = Enum.Font.GothamBold; TL.TextSize = 14; TL.BackgroundTransparency = 1; TL.TextXAlignment = Enum.TextXAlignment.Left
 
             if bc.Desc and bc.Desc ~= "" then
-                local DL = Instance.new("TextLabel", Card); DL.Size = UDim2.new(1, -20, 0, 20); DL.Position = UDim2.new(0, 15, 0, 26); DL.Text = bc.Desc; DL.TextColor3 = Color3.fromRGB(140, 140, 140); DL.Font = Enum.Font.GothamMedium; DL.TextSize = 11; DL.BackgroundTransparency = 1; DL.TextXAlignment = Enum.TextXAlignment.Left
+                TL.Position = UDim2.new(0, 15, 0, 8); TL.Size = UDim2.new(1, -20, 0, 20)
+                local DL = Instance.new("TextLabel", Card); DL.Position = UDim2.new(0, 15, 0, 28); DL.Text = bc.Desc; DL.TextColor3 = Color3.fromRGB(200, 200, 200); DL.Font = Enum.Font.GothamMedium; DL.TextSize = 11; DL.BackgroundTransparency = 1; DL.TextXAlignment = Enum.TextXAlignment.Left; DL.TextWrapped = true; DL.TextYAlignment = Enum.TextYAlignment.Top
+                
+                local function updateSize()
+                    DL.Size = UDim2.new(1, -30, 0, DL.TextBounds.Y)
+                    Card.Size = UDim2.new(1, -20, 0, 38 + DL.TextBounds.Y)
+                end
+                DL:GetPropertyChangedSignal("TextBounds"):Connect(updateSize); updateSize()
+            else
+                TL.Size = UDim2.new(1, -20, 1, 0)
             end
 
             Card.MouseButton1Click:Connect(function()
@@ -372,7 +380,7 @@ function WindUI:CreateWindow(WinConf)
             tabLayoutCounter = tabLayoutCounter + 1
             local Card = Instance.new("TextButton", Page); Card.Name = tc.Title or "Toggle"; Card.Size = UDim2.new(1, -20, 0, 50); Card.BackgroundColor3 = CARD_COLOR; Card.BackgroundTransparency = 0.5; Card.AutoButtonColor = false; Card.Text = ""; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
-            
+
             local TL = Instance.new("TextLabel", Card); TL.Size = UDim2.new(1, -80, 0, 20); TL.Position = UDim2.new(0, 15, 0, 15)
             if tc.Desc and tc.Desc ~= "" then TL.Position = UDim2.new(0, 15, 0, 8) end 
             TL.Text = tc.Title or ""; TL.TextColor3 = Color3.new(1,1,1); TL.Font = Enum.Font.GothamBold; TL.TextSize = 14; TL.BackgroundTransparency = 1; TL.TextXAlignment = Enum.TextXAlignment.Left
@@ -398,7 +406,7 @@ function WindUI:CreateWindow(WinConf)
                 end
             end
             Update(false)
-            
+
             Card.MouseButton1Click:Connect(function()
                 state = not state; Update(true); if tc.Callback then tc.Callback(state) end
             end)
@@ -410,14 +418,17 @@ function WindUI:CreateWindow(WinConf)
             tabLayoutCounter = tabLayoutCounter + 1
             local Card = Instance.new("Frame", Page); Card.Name = dc.Title or "Dropdown"; Card.Size = UDim2.new(1, -20, 0, 50); Card.BackgroundColor3 = CARD_COLOR; Card.BackgroundTransparency = 0.5; Card.ClipsDescendants = true; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
-            
+
             local Btn = Instance.new("TextButton", Card); Btn.Size = UDim2.new(1, 0, 0, 50); Btn.BackgroundTransparency = 1; Btn.Text = ""
-            
+
             local TL = Instance.new("TextLabel", Btn); TL.Size = UDim2.new(1, -120, 0, 20); TL.Position = UDim2.new(0, 15, 0, 15); TL.Text = dc.Title or ""; TL.TextColor3 = Color3.new(1,1,1); TL.Font = Enum.Font.GothamBold; TL.TextSize = 14; TL.BackgroundTransparency = 1; TL.TextXAlignment = Enum.TextXAlignment.Left
             local DL = Instance.new("TextLabel", Btn); DL.Size = UDim2.new(1, -120, 0, 20); DL.Position = UDim2.new(0, 15, 0, 28); DL.Text = dc.Desc or ""; DL.TextColor3 = Color3.fromRGB(140, 140, 140); DL.Font = Enum.Font.GothamMedium; DL.TextSize = 11; DL.BackgroundTransparency = 1; DL.TextXAlignment = Enum.TextXAlignment.Left
             local ValL = Instance.new("TextLabel", Btn); ValL.Size = UDim2.new(0, 90, 0, 50); ValL.Position = UDim2.new(1, -105, 0, 0); ValL.Text = dc.Value or ""; ValL.TextColor3 = ACCENT_BLUE; ValL.Font = Enum.Font.GothamBold; ValL.TextSize = 13; ValL.BackgroundTransparency = 1; ValL.TextXAlignment = Enum.TextXAlignment.Right
 
             local Scroll = Instance.new("ScrollingFrame", Card); Scroll.Size = UDim2.new(1, -30, 0, 120); Scroll.Position = UDim2.new(0, 15, 0, 50); Scroll.BackgroundTransparency = 1; Scroll.ScrollBarThickness = 2; Scroll.Visible = false
+            Scroll.Active = true 
+            Scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+            Scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
             local SList = Instance.new("UIListLayout", Scroll); SList.Padding = UDim.new(0, 5)
 
             local open = false
@@ -444,7 +455,6 @@ function WindUI:CreateWindow(WinConf)
                     if dc.Callback then dc.Callback(opt) end
                 end)
             end
-            SList:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() Scroll.CanvasSize = UDim2.new(0,0,0, SList.AbsoluteContentSize.Y) end)
             table.insert(GLOBAL_CARDS, {Instance = Card, Parent = Page})
             return Card
         end
@@ -453,7 +463,7 @@ function WindUI:CreateWindow(WinConf)
             tabLayoutCounter = tabLayoutCounter + 1
             local Card = Instance.new("Frame", Page); Card.Name = ic.Title or "Input"; Card.Size = UDim2.new(1, -20, 0, 80); Card.BackgroundColor3 = CARD_COLOR; Card.BackgroundTransparency = 0.5; Card.BorderSizePixel = 0; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
-            
+
             local TL = Instance.new("TextLabel", Card); TL.Text = ic.Title; TL.Size = UDim2.new(1, -30, 0, 20); TL.Position = UDim2.new(0, 15, 0, 12); TL.TextColor3 = Color3.new(1,1,1); TL.Font = Enum.Font.GothamBold; TL.TextSize = 14; TL.BackgroundTransparency = 1; TL.TextXAlignment = Enum.TextXAlignment.Left
 
             local BoxGroup = Instance.new("Frame", Card); BoxGroup.Size = UDim2.new(1, -30, 0, 32); BoxGroup.Position = UDim2.new(0, 15, 0, 38); BoxGroup.BackgroundColor3 = Color3.fromRGB(20, 22, 26)
@@ -469,9 +479,9 @@ function WindUI:CreateWindow(WinConf)
             tabLayoutCounter = tabLayoutCounter + 1
             local Card = Instance.new("Frame", Page); Card.Name = sc.Title or "Slider"; Card.Size = UDim2.new(1, -20, 0, 70); Card.BackgroundColor3 = CARD_COLOR; Card.BackgroundTransparency = 0.5; Card.BorderSizePixel = 0; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
-            
+
             local cMin, cMax, cDef = sc.Value.Min or 0, sc.Value.Max or 100, sc.Value.Default or 50; local cStep = sc.Step or 1
-            
+
             local TL = Instance.new("TextLabel", Card); TL.Text = sc.Title; TL.Size = UDim2.new(0.6, 0, 0, 20); TL.Position = UDim2.new(0, 15, 0, 12); TL.TextColor3 = Color3.new(1,1,1); TL.Font = Enum.Font.GothamBold; TL.TextSize = 14; TL.BackgroundTransparency = 1; TL.TextXAlignment = Enum.TextXAlignment.Left
             local VL = Instance.new("TextLabel", Card); VL.Text = tostring(cDef); VL.Size = UDim2.new(0.3, 0, 0, 20); VL.Position = UDim2.new(1, -45, 0, 12); VL.TextColor3 = ACCENT_BLUE; VL.Font = Enum.Font.GothamBold; VL.TextSize = 14; VL.BackgroundTransparency = 1; VL.TextXAlignment = Enum.TextXAlignment.Right
 
@@ -501,4 +511,3 @@ function WindUI:CreateWindow(WinConf)
     return Window
 end
 return WindUI
---🤓🤓🤓
