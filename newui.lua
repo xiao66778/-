@@ -138,7 +138,7 @@ function WindUI:CreateWindow(WinConf)
     end
 
     local Content = Instance.new("Frame", Main); Content.BackgroundTransparency = 1; Content.ZIndex = 2
-    local Search = Instance.new("TextBox", Content); Search.Size = UDim2.new(1, -150, 0, 40); Search.Position = UDim2.new(0, 20, 0, 25); Search.BackgroundTransparency = 1; Search.PlaceholderText = "全局搜索..."; Search.Text = ""; Search.TextColor3 = Color3.fromRGB(255, 255, 255); Search.Font = Enum.Font.Gotham; Search.TextSize = 15; Search.TextXAlignment = Enum.TextXAlignment.Left; Search.ZIndex = 10; Search.Active = true
+    local Search = Instance.new("TextBox", Content); Search.Size = UDim2.new(1, -150, 0, 40); Search.Position = UDim2.new(0, 20, 0, 25); Search.BackgroundTransparency = 1; Search.PlaceholderText = "搜索..."; Search.Text = ""; Search.TextColor3 = Color3.fromRGB(255, 255, 255); Search.Font = Enum.Font.Gotham; Search.TextSize = 15; Search.TextXAlignment = Enum.TextXAlignment.Left; Search.ZIndex = 10; Search.Active = true
     local PageHold = Instance.new("Frame", Content); PageHold.Size = UDim2.new(1, -20, 1, -90); PageHold.Position = UDim2.new(0, 0, 0, 80); PageHold.BackgroundTransparency = 1
 
     local GlobalSearchPage = Instance.new("ScrollingFrame", Content); GlobalSearchPage.Size = UDim2.new(1, -20, 1, -90); GlobalSearchPage.Position = UDim2.new(0, 0, 0, 80); GlobalSearchPage.BackgroundTransparency = 1; GlobalSearchPage.ScrollBarThickness = 2; GlobalSearchPage.Visible = false
