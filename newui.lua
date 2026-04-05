@@ -37,7 +37,7 @@ local function CoreMakeDraggable(handle, frame)
 end
 
 local NotifyGui = Instance.new("ScreenGui")
-NotifyGui.Name = "RainbowAI_WindUI_Notify"
+NotifyGui.Name = "WindUI_Notify"
 NotifyGui.ResetOnSpawn = false
 if gethui then NotifyGui.Parent = gethui() else NotifyGui.Parent = CoreGui end
 
@@ -162,16 +162,12 @@ function WindUI:CreateWindow(WinConf)
         local isMobile = (vp.X < 800 or vp.Y < 500)
         currentScale = isMobile and 0.85 or 1
         
-        if Main.Visible then
-            TweenService:Create(MainScale, TweenInfo.new(0.2), {Scale = currentScale}):Play()
-        end
+        if Main.Visible then TweenService:Create(MainScale, TweenInfo.new(0.2), {Scale = currentScale}):Play() end
         
         if isMobile then
             TweenService:Create(Main, TweenInfo.new(0.2), {Size = UDim2.new(0, 620, 0, 370)}):Play()
             Sidebar.Size = UDim2.new(0, 160, 1, 0)
-            Content.Size = UDim2.new(1, -160, 1, 0)
-            Content.Position = UDim2.new(0, 160, 0, 0)
-            
+            Content.Size = UDim2.new(1, -160, 1, 0); Content.Position = UDim2.new(0, 160, 0, 0)
             TitleLabel.Size = UDim2.new(1, -10, 0, 36); TitleLabel.Position = UDim2.new(0, 20, 0, 20); TitleLabel.TextSize = 22
             VersionLabel.Size = UDim2.new(1, -10, 0, 20); VersionLabel.Position = UDim2.new(0, 20, 0, 48)
             NavList.Size = UDim2.new(1, 0, 1, -150); NavList.Position = UDim2.new(0, 0, 0, 80)
@@ -185,9 +181,7 @@ function WindUI:CreateWindow(WinConf)
         else
             TweenService:Create(Main, TweenInfo.new(0.2), {Size = UDim2.new(0, 850, 0, 500)}):Play()
             Sidebar.Size = UDim2.new(0, 210, 1, 0)
-            Content.Size = UDim2.new(1, -210, 1, 0)
-            Content.Position = UDim2.new(0, 210, 0, 0)
-            
+            Content.Size = UDim2.new(1, -210, 1, 0); Content.Position = UDim2.new(0, 210, 0, 0)
             TitleLabel.Size = UDim2.new(1, -10, 0, 36); TitleLabel.Position = UDim2.new(0, 20, 0, 22); TitleLabel.TextSize = 26
             VersionLabel.Size = UDim2.new(1, -10, 0, 20); VersionLabel.Position = UDim2.new(0, 20, 0, 54)
             NavList.Size = UDim2.new(1, 0, 1, -175); NavList.Position = UDim2.new(0, 0, 0, 95)
@@ -422,15 +416,21 @@ function WindUI:CreateWindow(WinConf)
             local TL = Instance.new("TextLabel", Btn); TL.Size = UDim2.new(1, -120, 0, 20); TL.Position = UDim2.new(0, 15, 0, 15); TL.Text = dc.Title or ""; TL.TextColor3 = Color3.new(1,1,1); TL.Font = Enum.Font.GothamBold; TL.TextSize = 14; TL.BackgroundTransparency = 1; TL.TextXAlignment = Enum.TextXAlignment.Left
             local DL = Instance.new("TextLabel", Btn); DL.Size = UDim2.new(1, -120, 0, 20); DL.Position = UDim2.new(0, 15, 0, 28); DL.Text = dc.Desc or ""; DL.TextColor3 = Color3.fromRGB(140, 140, 140); DL.Font = Enum.Font.GothamMedium; DL.TextSize = 11; DL.BackgroundTransparency = 1; DL.TextXAlignment = Enum.TextXAlignment.Left
             local ValL = Instance.new("TextLabel", Btn); ValL.Size = UDim2.new(0, 90, 0, 50); ValL.Position = UDim2.new(1, -105, 0, 0); ValL.Text = dc.Value or ""; ValL.TextColor3 = ACCENT_BLUE; ValL.Font = Enum.Font.GothamBold; ValL.TextSize = 13; ValL.BackgroundTransparency = 1; ValL.TextXAlignment = Enum.TextXAlignment.Right
-            
-            local Scroll = Instance.new("ScrollingFrame", Card); Scroll.Size = UDim2.new(1, -30, 1, -60); Scroll.Position = UDim2.new(0, 15, 0, 50); Scroll.BackgroundTransparency = 1; Scroll.ScrollBarThickness = 2
-            Scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y; Scroll.CanvasSize = UDim2.new(0,0,0,0)
+
+            local Scroll = Instance.new("ScrollingFrame", Card); Scroll.Size = UDim2.new(1, -30, 0, 120); Scroll.Position = UDim2.new(0, 15, 0, 50); Scroll.BackgroundTransparency = 1; Scroll.ScrollBarThickness = 2; Scroll.Visible = false
             local SList = Instance.new("UIListLayout", Scroll); SList.Padding = UDim.new(0, 5)
 
             local open = false
             Btn.MouseButton1Click:Connect(function()
                 open = not open
+                if open then
+                    Scroll.Visible = true
+                    Scroll.ScrollingEnabled = true
+                else
+                    Scroll.ScrollingEnabled = false
+                end
                 TweenService:Create(Card, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = open and UDim2.new(1, -20, 0, 180) or UDim2.new(1, -20, 0, 50)}):Play()
+                if not open then task.delay(0.3, function() if not open then Scroll.Visible = false end end) end
             end)
 
             for _, opt in ipairs(dc.Values or {}) do
@@ -438,10 +438,13 @@ function WindUI:CreateWindow(WinConf)
                 Instance.new("UICorner", OB).CornerRadius = UDim.new(0, 6)
                 OB.MouseButton1Click:Connect(function()
                     ValL.Text = opt.Title; open = false
+                    Scroll.ScrollingEnabled = false
                     TweenService:Create(Card, TweenInfo.new(0.3), {Size = UDim2.new(1, -20, 0, 50)}):Play()
+                    task.delay(0.3, function() if not open then Scroll.Visible = false end end)
                     if dc.Callback then dc.Callback(opt) end
                 end)
             end
+            SList:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() Scroll.CanvasSize = UDim2.new(0,0,0, SList.AbsoluteContentSize.Y) end)
             table.insert(GLOBAL_CARDS, {Instance = Card, Parent = Page})
             return Card
         end
@@ -498,3 +501,4 @@ function WindUI:CreateWindow(WinConf)
     return Window
 end
 return WindUI
+--🤓🤓🤓
