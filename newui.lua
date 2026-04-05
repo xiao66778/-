@@ -237,7 +237,7 @@ function WindUI:CreateWindow(WinConf)
         if v[4] then obj.BackgroundColor3 = Color3.new(1,1,1); obj.BorderSizePixel = 0 end
     end
 
-    local PillT = Instance.new("TextLabel", Pill); PillT.Size = UDim2.new(0, 90, 1, 0); PillT.Position = UDim2.new(0, 100, 0, 0); PillT.Text = "RainbowAI 助手"; PillT.TextColor3 = Color3.new(1,1,1); PillT.Font = Enum.Font.GothamMedium; PillT.TextSize = 15; PillT.TextXAlignment = Enum.TextXAlignment.Left; PillT.BackgroundTransparency = 1
+    local PillT = Instance.new("TextLabel", Pill); PillT.Size = UDim2.new(0, 90, 1, 0); PillT.Position = UDim2.new(0, 100, 0, 0); PillT.Text = ..Texcb.. ; PillT.TextColor3 = Color3.new(1,1,1); PillT.Font = Enum.Font.GothamMedium; PillT.TextSize = 15; PillT.TextXAlignment = Enum.TextXAlignment.Left; PillT.BackgroundTransparency = 1
     local PCheck = Instance.new("TextLabel", Pill); PCheck.Size = UDim2.new(0, 24, 0, 24); PCheck.Position = UDim2.new(1, -35, 0.5, -12); PCheck.Text = ""; PCheck.TextColor3 = ACCENT_BLUE; PCheck.Font = Enum.Font.Gotham; PCheck.TextSize = 22; PCheck.BackgroundTransparency = 1
     local PDragZone = Instance.new("TextButton", Pill); PDragZone.Size = UDim2.new(0, 60, 1, 0); PDragZone.BackgroundTransparency = 1; PDragZone.Text = ""; PDragZone.ZIndex=99
     CoreMakeDraggable(PDragZone, Pill)
