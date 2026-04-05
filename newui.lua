@@ -102,7 +102,10 @@ function WindUI:CreateWindow(WinConf)
     local Sidebar = Instance.new("Frame", Main); Sidebar.BackgroundTransparency = 1; Sidebar.ZIndex = 2
     local TitleLabel = Instance.new("TextLabel", Sidebar); TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255); TitleLabel.Font = Enum.Font.GothamBold; TitleLabel.TextXAlignment = Enum.TextXAlignment.Left; TitleLabel.BackgroundTransparency = 1; TitleLabel.TextTruncate = Enum.TextTruncate.AtEnd; TitleLabel.Text = WTitle
     local VersionLabel = Instance.new("TextLabel", Sidebar); VersionLabel.Text = "v" .. WVersion:gsub("^v", ""); VersionLabel.TextColor3 = Color3.fromRGB(120, 120, 120); VersionLabel.Font = Enum.Font.GothamMedium; VersionLabel.TextSize = 12; VersionLabel.TextXAlignment = Enum.TextXAlignment.Left; VersionLabel.BackgroundTransparency = 1
+    
     local NavList = Instance.new("ScrollingFrame", Sidebar); NavList.BackgroundTransparency = 1; NavList.ScrollBarThickness = 0
+    NavList.AutomaticCanvasSize = Enum.AutomaticSize.Y; NavList.CanvasSize = UDim2.new(0, 0, 0, 0)
+    local NavPadding = Instance.new("UIPadding", NavList); NavPadding.PaddingBottom = UDim.new(0, 20)
     Instance.new("UIListLayout", NavList).Padding = UDim.new(0, 10)
 
     local ProfileCard = Instance.new("Frame", Sidebar)
@@ -139,9 +142,10 @@ function WindUI:CreateWindow(WinConf)
     local PageHold = Instance.new("Frame", Content); PageHold.Size = UDim2.new(1, -20, 1, -90); PageHold.Position = UDim2.new(0, 0, 0, 80); PageHold.BackgroundTransparency = 1
 
     local GlobalSearchPage = Instance.new("ScrollingFrame", Content); GlobalSearchPage.Size = UDim2.new(1, -20, 1, -90); GlobalSearchPage.Position = UDim2.new(0, 0, 0, 80); GlobalSearchPage.BackgroundTransparency = 1; GlobalSearchPage.ScrollBarThickness = 2; GlobalSearchPage.Visible = false
+    GlobalSearchPage.AutomaticCanvasSize = Enum.AutomaticSize.Y; GlobalSearchPage.CanvasSize = UDim2.new(0,0,0,0)
+    local GSPadding = Instance.new("UIPadding", GlobalSearchPage); GSPadding.PaddingBottom = UDim.new(0, 20)
     local GLL = Instance.new("UIListLayout", GlobalSearchPage); GLL.Padding = UDim.new(0, 10); GLL.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    GLL.SortOrder = Enum.SortOrder.LayoutOrder 
-    GLL:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() GlobalSearchPage.CanvasSize = UDim2.new(0,0,0, GLL.AbsoluteContentSize.Y + 20) end)
+    GLL.SortOrder = Enum.SortOrder.LayoutOrder
 
     local currentScale = 1
     local function GetScreenSize()
@@ -158,12 +162,16 @@ function WindUI:CreateWindow(WinConf)
         local isMobile = (vp.X < 800 or vp.Y < 500)
         currentScale = isMobile and 0.85 or 1
         
-        if Main.Visible then TweenService:Create(MainScale, TweenInfo.new(0.2), {Scale = currentScale}):Play() end
+        if Main.Visible then
+            TweenService:Create(MainScale, TweenInfo.new(0.2), {Scale = currentScale}):Play()
+        end
         
         if isMobile then
             TweenService:Create(Main, TweenInfo.new(0.2), {Size = UDim2.new(0, 620, 0, 370)}):Play()
             Sidebar.Size = UDim2.new(0, 160, 1, 0)
-            Content.Size = UDim2.new(1, -160, 1, 0); Content.Position = UDim2.new(0, 160, 0, 0)
+            Content.Size = UDim2.new(1, -160, 1, 0)
+            Content.Position = UDim2.new(0, 160, 0, 0)
+            
             TitleLabel.Size = UDim2.new(1, -10, 0, 36); TitleLabel.Position = UDim2.new(0, 20, 0, 20); TitleLabel.TextSize = 22
             VersionLabel.Size = UDim2.new(1, -10, 0, 20); VersionLabel.Position = UDim2.new(0, 20, 0, 48)
             NavList.Size = UDim2.new(1, 0, 1, -150); NavList.Position = UDim2.new(0, 0, 0, 80)
@@ -177,7 +185,9 @@ function WindUI:CreateWindow(WinConf)
         else
             TweenService:Create(Main, TweenInfo.new(0.2), {Size = UDim2.new(0, 850, 0, 500)}):Play()
             Sidebar.Size = UDim2.new(0, 210, 1, 0)
-            Content.Size = UDim2.new(1, -210, 1, 0); Content.Position = UDim2.new(0, 210, 0, 0)
+            Content.Size = UDim2.new(1, -210, 1, 0)
+            Content.Position = UDim2.new(0, 210, 0, 0)
+            
             TitleLabel.Size = UDim2.new(1, -10, 0, 36); TitleLabel.Position = UDim2.new(0, 20, 0, 22); TitleLabel.TextSize = 26
             VersionLabel.Size = UDim2.new(1, -10, 0, 20); VersionLabel.Position = UDim2.new(0, 20, 0, 54)
             NavList.Size = UDim2.new(1, 0, 1, -175); NavList.Position = UDim2.new(0, 0, 0, 95)
@@ -281,10 +291,11 @@ function WindUI:CreateWindow(WinConf)
 
         local Page = Instance.new("ScrollingFrame", PageHold)
         Page.Size = UDim2.new(1, 0, 1, 0); Page.BackgroundTransparency = 1; Page.ScrollBarThickness = 2; Page.Visible = false
+        Page.AutomaticCanvasSize = Enum.AutomaticSize.Y; Page.CanvasSize = UDim2.new(0,0,0,0)
+        local PagePadding = Instance.new("UIPadding", Page); PagePadding.PaddingBottom = UDim.new(0, 20)
         local LL = Instance.new("UIListLayout", Page)
         LL.Padding = UDim.new(0, 10); LL.HorizontalAlignment = Enum.HorizontalAlignment.Center
-        LL.SortOrder = Enum.SortOrder.LayoutOrder 
-        LL:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() Page.CanvasSize = UDim2.new(0,0,0, LL.AbsoluteContentSize.Y + 20) end)
+        LL.SortOrder = Enum.SortOrder.LayoutOrder
 
         NBtn.MouseButton1Click:Connect(function()
             if locked then return end
@@ -413,6 +424,7 @@ function WindUI:CreateWindow(WinConf)
             local ValL = Instance.new("TextLabel", Btn); ValL.Size = UDim2.new(0, 90, 0, 50); ValL.Position = UDim2.new(1, -105, 0, 0); ValL.Text = dc.Value or ""; ValL.TextColor3 = ACCENT_BLUE; ValL.Font = Enum.Font.GothamBold; ValL.TextSize = 13; ValL.BackgroundTransparency = 1; ValL.TextXAlignment = Enum.TextXAlignment.Right
             
             local Scroll = Instance.new("ScrollingFrame", Card); Scroll.Size = UDim2.new(1, -30, 1, -60); Scroll.Position = UDim2.new(0, 15, 0, 50); Scroll.BackgroundTransparency = 1; Scroll.ScrollBarThickness = 2
+            Scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y; Scroll.CanvasSize = UDim2.new(0,0,0,0)
             local SList = Instance.new("UIListLayout", Scroll); SList.Padding = UDim.new(0, 5)
 
             local open = false
@@ -430,7 +442,6 @@ function WindUI:CreateWindow(WinConf)
                     if dc.Callback then dc.Callback(opt) end
                 end)
             end
-            SList:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() Scroll.CanvasSize = UDim2.new(0,0,0, SList.AbsoluteContentSize.Y) end)
             table.insert(GLOBAL_CARDS, {Instance = Card, Parent = Page})
             return Card
         end
