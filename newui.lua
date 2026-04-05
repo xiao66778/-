@@ -1,8 +1,3 @@
--- RainbowAI x WindUI Custom Framework Injector (V11 LayoutOrder & Icon Fix)
--- Perfect API Compatibility: WindUI
--- Fixes: Component LayoutOrder Locking, UI Icon Compatibility
--- Author: Assistant
-
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
@@ -14,7 +9,6 @@ local Players = game:GetService("Players")
 local WindUI = {} 
 local GLOBAL_CARDS = {}
 
---[核心视觉样式]
 local ACCENT_BLUE = Color3.fromRGB(0, 122, 255)
 local BG_COLOR = Color3.fromRGB(15, 18, 22)
 local CARD_COLOR = Color3.fromRGB(35, 38, 45)
@@ -22,7 +16,6 @@ local CARD_COLOR = Color3.fromRGB(35, 38, 45)
 local ZOOM_IN = TweenInfo.new(0.45, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
 local ZOOM_OUT = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
---[引擎级底层平滑拖拽算法]
 local function CoreMakeDraggable(handle, frame)
     local drag = false; local startPos, dragStart
     handle.InputBegan:Connect(function(inp)
@@ -43,9 +36,6 @@ local function CoreMakeDraggable(handle, frame)
     end)
 end
 
-------------------------------------------------------------------
---[独立标准通知系统 (Toast Notifications)]
-------------------------------------------------------------------
 local NotifyGui = Instance.new("ScreenGui")
 NotifyGui.Name = "RainbowAI_WindUI_Notify"
 NotifyGui.ResetOnSpawn = false
@@ -86,9 +76,6 @@ function WindUI:Popup(pc)
     self:Notify({ Title = pc.Title or "Popup", Content = pc.Content or "", Duration = 5 })
 end
 
-------------------------------------------------------------------
---[框架生成层 CreateWindow]
-------------------------------------------------------------------
 function WindUI:CreateWindow(WinConf)
     local Window = {}
     local WTitle = type(WinConf) == "table" and WinConf.Title or WinConf or "RainbowAI"
@@ -148,15 +135,14 @@ function WindUI:CreateWindow(WinConf)
     end
 
     local Content = Instance.new("Frame", Main); Content.BackgroundTransparency = 1; Content.ZIndex = 2
-    local Search = Instance.new("TextBox", Content); Search.Size = UDim2.new(1, -150, 0, 40); Search.Position = UDim2.new(0, 20, 0, 25); Search.BackgroundTransparency = 1; Search.PlaceholderText = "全局搜索 (Global Search)..."; Search.Text = ""; Search.TextColor3 = Color3.fromRGB(255, 255, 255); Search.Font = Enum.Font.Gotham; Search.TextSize = 15; Search.TextXAlignment = Enum.TextXAlignment.Left; Search.ZIndex = 10; Search.Active = true
+    local Search = Instance.new("TextBox", Content); Search.Size = UDim2.new(1, -150, 0, 40); Search.Position = UDim2.new(0, 20, 0, 25); Search.BackgroundTransparency = 1; Search.PlaceholderText = "全局搜索..."; Search.Text = ""; Search.TextColor3 = Color3.fromRGB(255, 255, 255); Search.Font = Enum.Font.Gotham; Search.TextSize = 15; Search.TextXAlignment = Enum.TextXAlignment.Left; Search.ZIndex = 10; Search.Active = true
     local PageHold = Instance.new("Frame", Content); PageHold.Size = UDim2.new(1, -20, 1, -90); PageHold.Position = UDim2.new(0, 0, 0, 80); PageHold.BackgroundTransparency = 1
 
     local GlobalSearchPage = Instance.new("ScrollingFrame", Content); GlobalSearchPage.Size = UDim2.new(1, -20, 1, -90); GlobalSearchPage.Position = UDim2.new(0, 0, 0, 80); GlobalSearchPage.BackgroundTransparency = 1; GlobalSearchPage.ScrollBarThickness = 2; GlobalSearchPage.Visible = false
     local GLL = Instance.new("UIListLayout", GlobalSearchPage); GLL.Padding = UDim.new(0, 10); GLL.HorizontalAlignment = Enum.HorizontalAlignment.Center
-    GLL.SortOrder = Enum.SortOrder.LayoutOrder -- 【重要修复】确保搜索界面也强制按 LayoutOrder 排序
+    GLL.SortOrder = Enum.SortOrder.LayoutOrder 
     GLL:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() GlobalSearchPage.CanvasSize = UDim2.new(0,0,0, GLL.AbsoluteContentSize.Y + 20) end)
 
-    -- 黄金比例自适应排版
     local currentScale = 1
     local function GetScreenSize()
         local size = ScreenGui.AbsoluteSize
@@ -227,7 +213,6 @@ function WindUI:CreateWindow(WinConf)
         end
     end)
 
-    -- 【重要修复】把 ✕ 换成了兼容所有设备的 X 和 -
     local function MakeCtrlBtn(char, rx)
         local btn = Instance.new("TextButton", Main); btn.Size = UDim2.new(0, 36, 0, 36); btn.Position = UDim2.new(1, rx, 0, 25); btn.BackgroundColor3 = (char=="X" and Color3.fromRGB(255,60,60) or Color3.fromRGB(255,255,255)); btn.BackgroundTransparency = (char=="X" and 0 or 0.8); btn.Text = char; btn.TextColor3 = (char=="X" and Color3.new(1,1,1) or Color3.new(0,0,0)); btn.Font = Enum.Font.GothamBold; btn.TextSize = 18; btn.AutoButtonColor = false; btn.ZIndex = 999
         Instance.new("UICorner", btn).CornerRadius = UDim.new(1, 0)
@@ -286,7 +271,7 @@ function WindUI:CreateWindow(WinConf)
     function Window:Tab(cnf)
         local TT = cnf.Title or "No Title"
         local locked = cnf.Locked or false
-        local tabLayoutCounter = 0 -- 【重要修复】独立维护当前 Tab 下元素的渲染顺序
+        local tabLayoutCounter = 0
 
         local NBtn = Instance.new("TextButton", NavList)
         NBtn.Size = UDim2.new(1, -20, 0, 45); NBtn.Position = UDim2.new(0, 10, 0, 0); NBtn.BackgroundTransparency = 1; NBtn.AutoButtonColor = false; NBtn.Text = TT .. (locked and " (🔒)" or "")
@@ -298,7 +283,7 @@ function WindUI:CreateWindow(WinConf)
         Page.Size = UDim2.new(1, 0, 1, 0); Page.BackgroundTransparency = 1; Page.ScrollBarThickness = 2; Page.Visible = false
         local LL = Instance.new("UIListLayout", Page)
         LL.Padding = UDim.new(0, 10); LL.HorizontalAlignment = Enum.HorizontalAlignment.Center
-        LL.SortOrder = Enum.SortOrder.LayoutOrder -- 【重要修复】强制按设定顺序渲染
+        LL.SortOrder = Enum.SortOrder.LayoutOrder 
         LL:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function() Page.CanvasSize = UDim2.new(0,0,0, LL.AbsoluteContentSize.Y + 20) end)
 
         NBtn.MouseButton1Click:Connect(function()
@@ -460,7 +445,7 @@ function WindUI:CreateWindow(WinConf)
             local BoxGroup = Instance.new("Frame", Card); BoxGroup.Size = UDim2.new(1, -30, 0, 32); BoxGroup.Position = UDim2.new(0, 15, 0, 38); BoxGroup.BackgroundColor3 = Color3.fromRGB(20, 22, 26)
             Instance.new("UICorner", BoxGroup).CornerRadius = UDim.new(0,8); Instance.new("UIStroke", BoxGroup).Color = Color3.fromRGB(55,60,70)
 
-            local TBox = Instance.new("TextBox", BoxGroup); TBox.Size = UDim2.new(1, -16, 1, 0); TBox.Position = UDim2.new(0, 8, 0, 0); TBox.BackgroundTransparency = 1; TBox.PlaceholderText = ic.Placeholder or "请输入..."; TBox.Text = ic.Value or ""; TBox.TextColor3 = Color3.new(1,1,1); TBox.Font = Enum.Font.GothamMedium; TBox.TextSize = 13; TBox.TextXAlignment = Enum.TextXAlignment.Left; TBox.ClearTextOnFocus = false
+            local TBox = Instance.new("TextBox", BoxGroup); TBox.Size = UDim2.new(1, -16, 1, 0); TBox.Position = UDim2.new(0, 8, 0, 0); TBox.BackgroundTransparency = 1; TBox.PlaceholderText = ic.Placeholder or "请输入文本..."; TBox.Text = ic.Value or ""; TBox.TextColor3 = Color3.new(1,1,1); TBox.Font = Enum.Font.GothamMedium; TBox.TextSize = 13; TBox.TextXAlignment = Enum.TextXAlignment.Left; TBox.ClearTextOnFocus = false
             TBox.FocusLost:Connect(function() if ic.Callback then ic.Callback(TBox.Text) end end)
             table.insert(GLOBAL_CARDS, {Instance = Card, Parent = Page})
             return Card
@@ -502,4 +487,3 @@ function WindUI:CreateWindow(WinConf)
     return Window
 end
 return WindUI
---1
