@@ -80,6 +80,7 @@ function WindUI:CreateWindow(WinConf)
     local Window = {}
     local WTitle = type(WinConf) == "table" and WinConf.Title or WinConf or "RainbowAI"
     local WVersion = type(WinConf) == "table" and WinConf.Version or "1.0.0"
+    local WPillText = type(WinConf) == "table" and (WinConf.MiniText or WinConf.PillText) or WTitle
 
     local ScreenGui = Instance.new("ScreenGui")
     ScreenGui.Name = "RainbowAI_WindUI_Core"
@@ -237,7 +238,7 @@ function WindUI:CreateWindow(WinConf)
         if v[4] then obj.BackgroundColor3 = Color3.new(1,1,1); obj.BorderSizePixel = 0 end
     end
 
-    local PillT = Instance.new("TextLabel", Pill); PillT.Size = UDim2.new(0, 90, 1, 0); PillT.Position = UDim2.new(0, 100, 0, 0); PillT.Text = ..Texcb.. ; PillT.TextColor3 = Color3.new(1,1,1); PillT.Font = Enum.Font.GothamMedium; PillT.TextSize = 15; PillT.TextXAlignment = Enum.TextXAlignment.Left; PillT.BackgroundTransparency = 1
+    local PillT = Instance.new("TextLabel", Pill); PillT.Size = UDim2.new(0, 90, 1, 0); PillT.Position = UDim2.new(0, 100, 0, 0); PillT.Text = WPillText; PillT.TextColor3 = Color3.new(1,1,1); PillT.Font = Enum.Font.GothamMedium; PillT.TextSize = 15; PillT.TextXAlignment = Enum.TextXAlignment.Left; PillT.BackgroundTransparency = 1
     local PCheck = Instance.new("TextLabel", Pill); PCheck.Size = UDim2.new(0, 24, 0, 24); PCheck.Position = UDim2.new(1, -35, 0.5, -12); PCheck.Text = ""; PCheck.TextColor3 = ACCENT_BLUE; PCheck.Font = Enum.Font.Gotham; PCheck.TextSize = 22; PCheck.BackgroundTransparency = 1
     local PDragZone = Instance.new("TextButton", Pill); PDragZone.Size = UDim2.new(0, 60, 1, 0); PDragZone.BackgroundTransparency = 1; PDragZone.Text = ""; PDragZone.ZIndex=99
     CoreMakeDraggable(PDragZone, Pill)
@@ -269,6 +270,11 @@ function WindUI:CreateWindow(WinConf)
 
     function Window:Tag() end
     function Window:EditOpenButton() end
+    
+    -- [新增API] 运行时自由修改胶囊上的文字
+    function Window:SetMiniText(text)
+        if PillT then PillT.Text = text end
+    end
 
     local TABS_OBJ = {}
 
@@ -527,4 +533,4 @@ local CustomTabAPI = {}
     return Window
 end
 return WindUI
---1
+--2
