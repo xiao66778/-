@@ -326,18 +326,27 @@ local CustomTabAPI = {}
             local Card = Instance.new("Frame", Page); Card.Name = pc.Title or "Paragraph"
             Card.BackgroundColor3 = CARD_COLOR; Card.BackgroundTransparency = 0.5; Card.BorderSizePixel = 0; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
+            
+            -- 核心修复：启用引擎原生的自动高度适应
+            Card.AutomaticSize = Enum.AutomaticSize.Y
+            Card.Size = UDim2.new(1, -20, 0, 0) -- 基础高度设为0，让它完全由里面的文字撑开
+
+            -- 增加内边距，让文字不要贴着边缘
+            local pad = Instance.new("UIPadding", Card)
+            pad.PaddingTop = UDim.new(0, 12); pad.PaddingBottom = UDim.new(0, 12)
+            pad.PaddingLeft = UDim.new(0, 15); pad.PaddingRight = UDim.new(0, 15)
+
+            -- 启用垂直列表布局，自动向下排列标题和描述
+            local list = Instance.new("UIListLayout", Card)
+            list.SortOrder = Enum.SortOrder.LayoutOrder; list.Padding = UDim.new(0, 6)
 
             local T = Instance.new("TextLabel", Card)
-            T.Size = UDim2.new(1, -20, 0, 25); T.Position = UDim2.new(0, 15, 0, 5); T.Text = pc.Title or ""; T.Font = Enum.Font.GothamBold; T.TextSize = 15; T.TextColor3 = Color3.new(1,1,1); T.TextXAlignment = Enum.TextXAlignment.Left; T.BackgroundTransparency = 1
+            T.Size = UDim2.new(1, 0, 0, 0); T.Text = pc.Title or ""; T.Font = Enum.Font.GothamBold; T.TextSize = 15; T.TextColor3 = Color3.new(1,1,1); T.TextXAlignment = Enum.TextXAlignment.Left; T.BackgroundTransparency = 1
+            T.AutomaticSize = Enum.AutomaticSize.Y; T.TextWrapped = true; T.LayoutOrder = 1
 
             local D = Instance.new("TextLabel", Card)
-            D.Size = UDim2.new(1, -30, 0, 0); D.Position = UDim2.new(0, 15, 0, 30); D.Text = pc.Desc or ""; D.Font = Enum.Font.GothamMedium; D.TextSize = 12; D.TextColor3 = Color3.fromRGB(150, 150, 150); D.TextXAlignment = Enum.TextXAlignment.Left; D.TextYAlignment = Enum.TextYAlignment.Top; D.BackgroundTransparency = 1; D.TextWrapped = true; D.RichText = true
-
-            local function updateSize()
-                D.Size = UDim2.new(1, -30, 0, D.TextBounds.Y)
-                Card.Size = UDim2.new(1, -20, 0, 40 + D.TextBounds.Y)
-            end
-            D:GetPropertyChangedSignal("TextBounds"):Connect(updateSize); updateSize()
+            D.Size = UDim2.new(1, 0, 0, 0); D.Text = pc.Desc or ""; D.Font = Enum.Font.GothamMedium; D.TextSize = 12; D.TextColor3 = Color3.fromRGB(150, 150, 150); D.TextXAlignment = Enum.TextXAlignment.Left; D.BackgroundTransparency = 1
+            D.AutomaticSize = Enum.AutomaticSize.Y; D.TextWrapped = true; D.RichText = true; D.LayoutOrder = 2
 
             table.insert(GLOBAL_CARDS, {Instance = Card, Parent = Page})
             local PObj = {}
@@ -347,23 +356,29 @@ local CustomTabAPI = {}
 
         function CustomTabAPI:Button(bc)
             tabLayoutCounter = tabLayoutCounter + 1
-            local Card = Instance.new("TextButton", Page); Card.Size = UDim2.new(1, -20, 0, 45); Card.Name = bc.Title or "Btn"; Card.BackgroundColor3 = bc.Color or CARD_COLOR; Card.BackgroundTransparency = bc.Color and 0.2 or 0.5; Card.AutoButtonColor = false; Card.Text = ""; Card.LayoutOrder = tabLayoutCounter
+            local Card = Instance.new("TextButton", Page); Card.Name = bc.Title or "Btn"; Card.BackgroundColor3 = bc.Color or CARD_COLOR; Card.BackgroundTransparency = bc.Color and 0.2 or 0.5; Card.AutoButtonColor = false; Card.Text = ""; Card.LayoutOrder = tabLayoutCounter
             Instance.new("UICorner", Card).CornerRadius = UDim.new(0, 12)
 
-            local TL = Instance.new("TextLabel", Card); TL.Position = UDim2.new(0, 15, 0, 0)
+            -- 核心修复：启用引擎原生的自动高度适应
+            Card.AutomaticSize = Enum.AutomaticSize.Y
+            Card.Size = UDim2.new(1, -20, 0, 0) -- 基础高度设为0，完全由内部文字撑开
+
+            local pad = Instance.new("UIPadding", Card)
+            pad.PaddingTop = UDim.new(0, 12); pad.PaddingBottom = UDim.new(0, 12)
+            pad.PaddingLeft = UDim.new(0, 15); pad.PaddingRight = UDim.new(0, 15)
+
+            local list = Instance.new("UIListLayout", Card)
+            list.SortOrder = Enum.SortOrder.LayoutOrder; list.Padding = UDim.new(0, 6)
+
+            local TL = Instance.new("TextLabel", Card)
+            TL.Size = UDim2.new(1, 0, 0, 0)
             TL.Text = (bc.Title or "") .. (bc.Locked and " 🔒" or ""); TL.TextColor3 = Color3.new(1,1,1); TL.Font = Enum.Font.GothamBold; TL.TextSize = 14; TL.BackgroundTransparency = 1; TL.TextXAlignment = Enum.TextXAlignment.Left
+            TL.AutomaticSize = Enum.AutomaticSize.Y; TL.TextWrapped = true; TL.LayoutOrder = 1
 
             if bc.Desc and bc.Desc ~= "" then
-                TL.Position = UDim2.new(0, 15, 0, 8); TL.Size = UDim2.new(1, -20, 0, 20)
-                local DL = Instance.new("TextLabel", Card); DL.Position = UDim2.new(0, 15, 0, 28); DL.Text = bc.Desc; DL.TextColor3 = Color3.fromRGB(200, 200, 200); DL.Font = Enum.Font.GothamMedium; DL.TextSize = 11; DL.BackgroundTransparency = 1; DL.TextXAlignment = Enum.TextXAlignment.Left; DL.TextWrapped = true; DL.TextYAlignment = Enum.TextYAlignment.Top
-                
-                local function updateSize()
-                    DL.Size = UDim2.new(1, -30, 0, DL.TextBounds.Y)
-                    Card.Size = UDim2.new(1, -20, 0, 38 + DL.TextBounds.Y)
-                end
-                DL:GetPropertyChangedSignal("TextBounds"):Connect(updateSize); updateSize()
-            else
-                TL.Size = UDim2.new(1, -20, 1, 0)
+                local DL = Instance.new("TextLabel", Card)
+                DL.Size = UDim2.new(1, 0, 0, 0); DL.Text = bc.Desc; DL.TextColor3 = Color3.fromRGB(200, 200, 200); DL.Font = Enum.Font.GothamMedium; DL.TextSize = 11; DL.BackgroundTransparency = 1; DL.TextXAlignment = Enum.TextXAlignment.Left
+                DL.AutomaticSize = Enum.AutomaticSize.Y; DL.TextWrapped = true; DL.LayoutOrder = 2
             end
 
             Card.MouseButton1Click:Connect(function()
@@ -425,6 +440,7 @@ local CustomTabAPI = {}
             local DL = Instance.new("TextLabel", Btn); DL.Size = UDim2.new(1, -120, 0, 20); DL.Position = UDim2.new(0, 15, 0, 28); DL.Text = dc.Desc or ""; DL.TextColor3 = Color3.fromRGB(140, 140, 140); DL.Font = Enum.Font.GothamMedium; DL.TextSize = 11; DL.BackgroundTransparency = 1; DL.TextXAlignment = Enum.TextXAlignment.Left
             local ValL = Instance.new("TextLabel", Btn); ValL.Size = UDim2.new(0, 90, 0, 50); ValL.Position = UDim2.new(1, -105, 0, 0); ValL.Text = dc.Value or ""; ValL.TextColor3 = ACCENT_BLUE; ValL.Font = Enum.Font.GothamBold; ValL.TextSize = 13; ValL.BackgroundTransparency = 1; ValL.TextXAlignment = Enum.TextXAlignment.Right
 
+            -- 修复：下拉菜单手机端滑动卡死问题
             local Scroll = Instance.new("ScrollingFrame", Card); Scroll.Size = UDim2.new(1, -30, 0, 120); Scroll.Position = UDim2.new(0, 15, 0, 50); Scroll.BackgroundTransparency = 1; Scroll.ScrollBarThickness = 2; Scroll.Visible = false
             Scroll.Active = true 
             Scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
@@ -511,3 +527,4 @@ local CustomTabAPI = {}
     return Window
 end
 return WindUI
+--1
